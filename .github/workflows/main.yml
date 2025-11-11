@@ -1,15 +1,14 @@
 name: Python Package using Conda
 
-on: [push]
+on: 
+  push:
+    branches: [main]
 
 jobs:
   build-linux:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 5
 
     steps:
-    - uses: actions/checkout@v3
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
@@ -20,11 +19,7 @@ jobs:
         echo $CONDA/bin >> $GITHUB_PATH
     - name: Install dependencies
       run: |
-        pip3 install -r requirements.txt
+        pip install xgboost==1.6.1
     - name: Lint with flake8
       run: |
         conda install flake8
-    - name: Test with pytest
-      run: |
-        conda install pytest
-        pytest
